@@ -1,0 +1,16 @@
+{
+  "realm": "${KEYCLOAK_REALM}",
+  "enabled": true,
+  "clients": [
+    {
+      "clientId": "${KEYCLOAK_CLIENT_ID}",
+      "enabled": true,
+      "publicClient": false,
+      "secret": "${KEYCLOAK_CLIENT_SECRET}",
+      "redirectUris": [
+        "${KEYCLOAK_APP_URL}/*"
+      ],
+      "protocol": "openid-connect"
+    }
+  ]
+}

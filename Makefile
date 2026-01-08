@@ -9,4 +9,8 @@ CYAN=\033[0;36m
 NC=\033[0m # No Color
 
 start-tools:
+	envsubst < ./template/keycloak/realm.json.template > ${KEYCLOAK_REALM_PATH}/${KEYCLOAK_REALM}-realm.json
 	docker compose -f ./docker-compose.postgres.yml -f ./docker-compose.keycloak.yml up -d
+
+stop-tools:
+	docker compose -f ./docker-compose.postgres.yml -f ./docker-compose.keycloak.yml down

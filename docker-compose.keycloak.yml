@@ -11,11 +11,14 @@ services:
   keycloak:
     image: quay.io/keycloak/keycloak:26.5.0
     environment:
-      KC_BOOTSTRAP_ADMIN_USERNAME: admin
-      KC_BOOTSTRAP_ADMIN_PASSWORD: admin
+      KC_BOOTSTRAP_ADMIN_USERNAME: ${KEYCLOAK_ADMIN}
+      KC_BOOTSTRAP_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD}
+      KC_HEALTH_ENABLED: "true"
+    volumes:
+      - ${KEYCLOAK_REALM_PATH}:/opt/keycloak/data/import
     ports:
-      - "8080:8080"
-    command: start-dev
+      - "${KEYCLOAK_PORT}:8080"
+    command: start-dev --import-realm
     networks:
       - app-net
     logging:
