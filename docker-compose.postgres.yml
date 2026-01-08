@@ -1,0 +1,37 @@
+version: "3.8"
+
+volumes:
+  db:
+
+networks:
+  app-net:
+    driver: bridge
+
+services:
+  pg-database:
+    image: ${DATABASE_IMAGE}
+    environment:
+      POSTGRES_USER: ${DATABASE_USER}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+      POSTGRES_DB: ${DATABASE_NAME}
+    volumes:
+      - db:/var/lib/postgresql/data
+    ports:
+      - "${DATABASE_PORT}:5432"
+    networks:
+      - app-net
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "5m"
+        max-file: "2"
+        tag: "{{.Name}}"
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "pg_isready -U ${DATABASE_USER} -d ${DATABASE_NAME}",
+        ]
+      interval: 5s
+      timeout: 5s
+      retries: 5

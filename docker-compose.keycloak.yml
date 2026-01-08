@@ -1,0 +1,28 @@
+version: "3.8"
+
+volumes:
+  db:
+
+networks:
+  app-net:
+    driver: bridge
+
+services:
+  keycloak:
+    image: quay.io/keycloak/keycloak:26.5.0
+    environment:
+      KC_BOOTSTRAP_ADMIN_USERNAME: admin
+      KC_BOOTSTRAP_ADMIN_PASSWORD: admin
+    ports:
+      - "8080:8080"
+    command: start-dev
+    networks:
+      - app-net
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "5m"
+        max-file: "2"
+        tag: "{{.Name}}"    
+
+ 
