@@ -6,6 +6,7 @@
       "clientId": "${KEYCLOAK_CLIENT_ID}",
       "enabled": true,
       "publicClient": false,
+      "name": "${KEYCLOAK_CLIENT_NAME}",
       "secret": "${KEYCLOAK_CLIENT_SECRET}",
       "redirectUris": [
         "${KEYCLOAK_APP_URL}/*"

@@ -1,6 +1,7 @@
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import type { DefaultSession, NextAuthConfig } from "next-auth";
-import DiscordProvider from "next-auth/providers/discord";
+import KeycloakProvider from "next-auth/providers/keycloak";
+import { env } from "~/env";
 
 import { db } from "~/server/db";
 
@@ -32,7 +33,13 @@ declare module "next-auth" {
  */
 export const authConfig = {
 	providers: [
-		DiscordProvider,
+		KeycloakProvider(
+			{
+				clientId: env.AUTH_KEYCLOAK_ID,
+				clientSecret: env.AUTH_KEYCLOAK_SECRET,
+				issuer: env.AUTH_KEYCLOAK_ISSUER,
+			}
+		)
 		/**
 		 * ...add more providers here.
 		 *
